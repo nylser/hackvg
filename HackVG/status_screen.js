@@ -3,10 +3,12 @@ import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 import StationChooseScreen from './status/StationChooseScreen';
 import TrainChooseScreen from './status/TrainChooseScreen';
+import ThankYouScreen from './status/ThankYouScreen';
 
 export default StatusScreen = createStackNavigator({
   Station: {screen: StationChooseScreen},
-  Train: {screen: TrainChooseScreen}
+  Train: {screen: TrainChooseScreen},
+  ThankYou: {screen: ThankYouScreen},
 });
 
 const styles = StyleSheet.create({

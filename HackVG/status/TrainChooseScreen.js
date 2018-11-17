@@ -27,12 +27,16 @@ export default class TrainChooseScreen extends React.Component {
 
   render() {
     const train_list = [];
+    const {navigate} = this.props.navigation;
     for(train of this.state.list){
-      const onpressmethod = null; // Construct useful method here
+      const onpressmethod = () => {
+        navigate('ThankYou');    
+      }; // Construct useful method here
+      // => extract required subway and insert into DB
       const date = new Date();
       date.setTime(train.departureTime);
       train_list.push(
-        <Text style={{...styles.item, alignItems: 'stretch', flex: 1}}><Text style={{color: train.lineBackgroundColor}}>{train.label}</Text><Text style={{alignSelf:'flex-start'}}>   {train.destination}   </Text><Text style={{alignSelf:'flex-end', color: train.departureTime < Date.now()? 'red': 'green'}}>{date.getHours()}:{date.getMinutes() < 10 ? "0" : ""}{date.getMinutes()}</Text></Text>//, {station.place}</Text>
+        <Text onPress={onpressmethod} style={{...styles.item, alignItems: 'stretch', flex: 1}}><Text style={{color: train.lineBackgroundColor}}>{train.label}</Text><Text style={{alignSelf:'flex-start'}}>   {train.destination}   </Text><Text style={{alignSelf:'flex-end', color: train.departureTime < Date.now()? 'red': 'green'}}>{date.getHours()}:{date.getMinutes() < 10 ? "0" : ""}{date.getMinutes()}</Text></Text>//, {station.place}</Text>
       )
     }
     return (
