@@ -1,4 +1,4 @@
-import {React} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, ScrollView, Button, AsyncStorage} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import MVGQueryLocation from '../API/MVGQueryLocation';
@@ -20,7 +20,7 @@ export default class StartSelectScreen extends React.Component {
     this.search.focus();
     
     setInterval(() => {
-      if((new Date).getTime() - this.last_update > 25 && this.query != this.last_query){
+      if(Date.now() - this.last_update > 25 && this.query != this.last_query){
         this.doQuery();
       }
     }, 1000);
