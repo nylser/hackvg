@@ -1,14 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TextInput, ScrollView} from 'react-native';
 import GPSModule from "../API/GPSModule";
 import MVGNearby from "../API/MVGNearby";
-import TrainChooseScreen from '../status/TrainChooseScreen';
+import {SearchBar} from 'react-native-elements';
 
 export default class StatusScreen extends React.Component {
 
-  static navigationOptions = {
+  static navigationOptions = (navigation) => {return {
     title: 'Geht es gleich los?',
-    backgroundColor: 'steelBlue'
+    headerStyle: styles.heading,
+  }
   };
 
   constructor(props){
@@ -43,7 +44,7 @@ export default class StatusScreen extends React.Component {
   render() {
     const station_list = [];
     const {navigate} = this.props.navigation;
-    this.state.list.foreach((station) => {
+    this.state.list.forEach((station) => {
       station_list.push(
         <Text style={styles.item} onPress={
           () => navigate('Train', {station})
@@ -52,6 +53,15 @@ export default class StatusScreen extends React.Component {
     });
     return (
       <View style={styles.container}>
+        <SearchBar
+          lightTheme
+          onClearText={()=>{
+            // Reset list based on location
+          }}
+          onChangeText={()=>{
+            // Update list of train stations
+          }}
+        >Anderer Startbahnhof?</SearchBar>
         <ScrollView>
           {station_list}
         </ScrollView>

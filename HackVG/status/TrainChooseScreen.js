@@ -3,9 +3,11 @@ import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import MVGDepart from '../API/MVGDepart';
 
 export default class TrainChooseScreen extends React.Component {
-  static navigationOptions = {
-    title: 'In welcher U-Bahn?',
-    backgroundColor: 'steelblue'
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('station', {name:"Fehler!"}).name,
+      headerStyle: styles.heading
+    };
   };
 
   constructor(props){
