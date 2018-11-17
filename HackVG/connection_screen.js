@@ -38,15 +38,12 @@ export default class ConnectionScreen extends React.Component {
     const station_list = [];
     for(station of this.state.list){
       station_list.push(
-        <Text style={styles.item}>{station.name}, {station.place}</Text>
+        <Text style={styles.item}>{station.name}</Text>//, {station.place}</Text>
       )
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Hallo Welt 2!</Text>
-        <Text>{this.state.latitude}, {this.state.longitude} (Accurate up to {this.state.accuracy} metres)</Text>
-        <Text>Occurred Error: {this.state.error}</Text>
-        <Text>Nearby stations:</Text>
+        <Text style={styles.heading}>Bist du in der U-Bahn?</Text>
         <ScrollView>
           {station_list}
         </ScrollView>
@@ -58,21 +55,25 @@ export default class ConnectionScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      flexDirection: 'column',
       backgroundColor: '#fff',
-      alignItems: 'center',
+      alignItems: 'stretch',
       justifyContent: 'center',
       paddingTop: 22,
     },
     heading: {
-      padding: 10,
+      padding: 15,
       fontSize: 20,
-      height: 44,
+      height: 60,
       fontWeight: 'bold',
+      backgroundColor: 'steelblue',
+      color: 'white'
     },
     item: {
       padding: 10,
       fontSize: 18,
       height: 44,
+      backgroundColor: 'skyblue'
     },
 });
   
