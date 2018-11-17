@@ -1,28 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
-import {createStackNavigator} from 'react-navigation';
-import ConnectionSelectScreen from './connection/conn_select.js';
-import StartSelectScreen from './connection/start_select.js';
-import EndSelectScreen from './connection/end_select.js';
+import {StyleSheet, View} from 'react-native';
+import {SearchBar} from 'react-native-elements';
+import MVGQueryLocation from '../API/MVGQueryLocation';
 
-const ConnectionScreen = createStackNavigator({
-  SelectScreen: {
-    screen: ConnectionSelectScreen, 
-    navigationOptions: ({navigation}) => ({
-      header: null,
-    })
-  },
-  StartSelectScreen: {
-    screen: StartSelectScreen,
-    title: `Start auswaehlen`,
-    navigationOptions: ({navigation}) => ({
-      
-    })
-  },
-  EndSelectScreen: {screen: EndSelectScreen},
-});
 
-export default ConnectionScreen;
+export default class StartSelectScreen extends React.Component  {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    this.search.focus();
+  }
+
+  render() {
+    const {navigation} = this.props;
+    const pre_val = navigation.getParam('pre_val', '');
+    return (
+      <View style={styles.container}>
+        <SearchBar value={JSON.stringify(pre_val)} ref={search => this.search=search} placeholder="Start eingeben"/>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'stretch',
     justifyContent: 'flex-start',
-    paddingTop: 22,
+    paddingTop: 0,
   },
   heading: {
     padding: 15,

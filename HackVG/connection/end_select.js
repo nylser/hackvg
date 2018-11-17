@@ -1,28 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
-import {createStackNavigator} from 'react-navigation';
-import ConnectionSelectScreen from './connection/conn_select.js';
-import StartSelectScreen from './connection/start_select.js';
-import EndSelectScreen from './connection/end_select.js';
+import {View, StyleSheet} from 'react-native';
 
-const ConnectionScreen = createStackNavigator({
-  SelectScreen: {
-    screen: ConnectionSelectScreen, 
-    navigationOptions: ({navigation}) => ({
-      header: null,
-    })
-  },
-  StartSelectScreen: {
-    screen: StartSelectScreen,
-    title: `Start auswaehlen`,
-    navigationOptions: ({navigation}) => ({
-      
-    })
-  },
-  EndSelectScreen: {screen: EndSelectScreen},
-});
+export default class EndSelectScreen extends React.Component  {
+  render() {
+    return (
+      <View style={styles.container}></View>
+    );
+  }
+}
 
-export default ConnectionScreen;
 
 const styles = StyleSheet.create({
   container: {
