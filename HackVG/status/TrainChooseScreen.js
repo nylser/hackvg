@@ -28,7 +28,10 @@ export default class TrainChooseScreen extends React.Component {
   render() {
     const train_list = [];
     for(train of this.state.list){
-      const onpressmethod = null; // Construct useful method here
+      const onpressmethod = null;
+      //const onpressmethod = () => {
+        // train in depid, label, product, destination, 
+      //}; // Construct useful method here
       const date = new Date();
       date.setTime(train.departureTime);
       train_list.push(
