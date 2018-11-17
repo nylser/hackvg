@@ -15,16 +15,17 @@ export default class {
     // Special authentication key of mvg for json fetching
     auth_head = new Headers();
     auth_head.append("X-MVG-Authorization-Key", "5af1beca494712ed38d313714d4caff6");
+    time_prev = -30;
 
     fetch(
-      `https://www.mvg.de/fahrinfo/api/departure/${this.station.id}?footway=0`,
+      `https://www.mvg.de/fahrinfo/api/departure/${this.station.id}?footway=${time_prev}`,
     {
       method: 'GET',
       headers: auth_head
     }).then(
       (response) => response.json()
     ).then(
-      (list) => callback(list.servingLines)
+      (list) => callback(list.servingLines, list.departures)
     ).catch((error)=>{
       callback(undefined, error);
     });
