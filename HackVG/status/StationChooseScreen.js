@@ -6,6 +6,11 @@ import TrainChooseScreen from '../status/TrainChooseScreen';
 
 export default class StatusScreen extends React.Component {
 
+  static navigationOptions = {
+    title: 'Geht es gleich los?',
+    backgroundColor: 'steelBlue'
+  };
+
   constructor(props){
     super(props);
     this.state = {
@@ -38,20 +43,15 @@ export default class StatusScreen extends React.Component {
   render() {
     const station_list = [];
     const {navigate} = this.props.navigation;
-    for(station of this.state.list){
+    this.state.list.foreach((station) => {
       station_list.push(
         <Text style={styles.item} onPress={
-          () => navigate('Status', {
-            screen: TrainChooseScreen,
-            props: this.props,
-            data: {station: station}
-          })
-        }>{station.name}</Text>//, {station.place}</Text>
+          () => navigate('Train', {station})
+        }>{station.name}</Text>
       )
-    }
+    });
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Bist du in der U-Bahn?</Text>
         <ScrollView>
           {station_list}
         </ScrollView>

@@ -1,25 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
+import {createStackNavigator} from 'react-navigation';
 import StationChooseScreen from './status/StationChooseScreen';
+import TrainChooseScreen from './status/TrainChooseScreen';
 
-export default class StatusScreen extends React.Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      screen: props.screen || StationChooseScreen,
-      data: props.data,
-      props: props.props
-    }
-
-  }
-  
-  render() {
-    const newData = Object.assign({}, this.props, this.state.props);
-    newData.data = this.state.data;
-    return React.createElement(this.state.screen, newData);
-  }
-}
+export default StatusScreen = createStackNavigator({
+  Station: {screen: StationChooseScreen},
+  Train: {screen: TrainChooseScreen}
+});
 
 const styles = StyleSheet.create({
     container: {

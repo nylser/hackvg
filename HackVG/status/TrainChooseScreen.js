@@ -1,31 +1,39 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
+import MVGDepart from '../API/MVGDepart';
 
 export default class TrainChooseScreen extends React.Component {
+  static navigationOptions = {
+    title: 'In welcher U-Bahn?',
+    backgroundColor: 'steelblue'
+  };
 
   constructor(props){
     super(props);
+    this.station = props.navigation.getParam('station', {id:0});
     this.state = {
-      station: props.station
+      list: [],
     }
-
   }
   
   componentDidMount(){
+    new MVGDepart(this.props.navigation.getParam('station', {id:0})).departings((list) => {
+      this.setState({list});
+    })
   }
 
   render() {
-    const station_list = [];
-    for(station of this.state.list){
-      station_list.push(
-        <Text style={styles.item}>{station.name}</Text>//, {station.place}</Text>
+    const train_list = [];
+    for(train of this.state.list){
+      train_list.push(
+        <Text style={styles.item}>{train.lineNumber} {train.destination}</Text>//, {station.place}</Text>
       )
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Bist du in der U-Bahn?</Text>
+        <Text style={styles.heading}>{this.station.name}</Text>
         <ScrollView>
-          {station_list}
+          {train_list}
         </ScrollView>
       </View>
     );
