@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, Button, View, ScrollView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import GPSModule from "../API/GPSModule";
 import MVGNearby from "../API/MVGNearby";
@@ -38,7 +38,7 @@ export default class ConnectionSelectScreen extends React.Component {
   }
 
   handleStartClick(e) {
-    this.props.navigation.navigate('StartSelectScreen');
+    this.props.navigation.navigate('StartSelectScreen',);
     /**val = e.value;
     if (val == "Start eingeben") {
       val = null;
@@ -56,21 +56,20 @@ export default class ConnectionSelectScreen extends React.Component {
 
   render() {
     if (this.state.nearby_list.length > 0) {
-      start_input = <SearchBar onFocus={(e) => {
-        e.preventDefault();
-        this.props.navigation.navigate('StartSelectScreen', {pre_val: e.value});
+      start_input = <SearchBar onFocus={(e) => { this.props.navigation.navigate('StartSelectScreen', {pre_val: start_input.value});
         
       }} value={this.state.nearby_list[0].name} />
     } else {
-      start_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('StartSelectScreen', {pre_val: e.value})} placeholder="Start eingeben" />
+      start_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('StartSelectScreen', {pre_val: start_input.value})} placeholder="Start eingeben" />
     }
-    end_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('EndSelectScreen', {pre_val: e.value})} placeholder="Ziel eingeben" />
+    end_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('EndSelectScreen', {pre_val: end_input.value})} placeholder="Ziel eingeben" />
 
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>Hier eine Verbindung suchen und finden!</Text>
         {start_input}
         {end_input}
+        <Button style={styles.item} title='Verbindung suchen!' />
       </View>
     );
   }
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     fontSize: 18,
-    height: 44,
+    height: 70,
     backgroundColor: 'skyblue'
   },
   empty_input: {

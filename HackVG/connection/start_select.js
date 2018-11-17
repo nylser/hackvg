@@ -1,24 +1,65 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text,
+   View, ScrollView, Button} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import MVGQueryLocation from '../API/MVGQueryLocation';
 
 
-export default class StartSelectScreen extends React.Component  {
+export default class StartSelectScreen extends React.Component {
+
   constructor(props) {
     super(props);
+    this.query = '';
+    this.last_query = '';
+    this.last_update = 0;
+    this.state = {
+      result_list: [],
+    };
   }
 
   componentDidMount() {
     this.search.focus();
+    setInterval(() => {
+      if((new Date).getTime() - this.last_update > 25 && this.query != this.last_query){
+        this.doQuery();
+      }
+    }, 1000);
+  }
+
+  doQuery() {
+    new MVGQueryLocation(this.query).query_location((list) => {
+      this.setState({result_list: list});
+      this.last_update = (new Date).getTime();
+      this.last_query = this.query;
+    });
   }
 
   render() {
-    const {navigation} = this.props;
-    const pre_val = navigation.getParam('pre_val', '');
+    const {navigation} = this.props;  
+    const pre_val = navigation.getParam('pre_val', 'Test');
+    const locations = []
+    this.state.result_list.forEach((location) => {
+      if(location.type=='station'){
+      locations.push(<Button style={styles.item} onPress={(i) => console.log(location.id)} title={location.name}/>);    
+      }
+    });
+    
     return (
       <View style={styles.container}>
-        <SearchBar value={JSON.stringify(pre_val)} ref={search => this.search=search} placeholder="Start eingeben"/>
+        <SearchBar onChangeText={(text) => {
+          this.query = text;
+          if((new Date).getTime() - this.last_update > 100){
+            new MVGQueryLocation(this.query).query_location((list) => {
+              this.setState({result_list: list});
+              this.last_update = (new Date).getTime();
+              this.last_query = this.query;
+            });
+          }
+        }}
+        value={JSON.stringify(pre_val)} ref={search => this.search=search} placeholder="Start eingeben"/>
+        <ScrollView>
+          {locations}
+        </ScrollView>
       </View>
     );
   }
@@ -45,7 +86,8 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     height: 44,
-    backgroundColor: 'skyblue'
+    backgroundColor: 'skyblue',
+    color: 'white'
   },
   empty_input: {
     padding: 10,

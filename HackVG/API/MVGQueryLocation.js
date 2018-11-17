@@ -7,7 +7,7 @@ export default class {
    * Fetch list of matches for possible locations
    */
   query_location(callback) {
-    auth_head = new Header();
+    auth_head = new Headers();
     auth_head.append("X-MVG-Authorization-Key", "5af1beca494712ed38d313714d4caff6");
 
     fetch(`https://www.mvg.de/fahrinfo/api/location/queryWeb?q=${this.query}`, {
