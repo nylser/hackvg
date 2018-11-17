@@ -1,7 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, ScrollView} from 'react-native';
-import GPSModule from "../API/GPSModule";
-import MVGNearby from "../API/MVGNearby";
 import {SearchBar} from 'react-native-elements';
 
 const styles = StyleSheet.create({
@@ -33,7 +31,7 @@ const styles = StyleSheet.create({
 export default class StatusScreen extends React.Component {
 
   static navigationOptions = {
-    title: 'Geht es gleich los?',
+    title: 'Dankeschön!',
     headerStyle: styles.heading,
     headerTintColor: 'white',
   };
@@ -51,34 +49,13 @@ export default class StatusScreen extends React.Component {
   }
   
   componentDidMount(){
-    GPSModule.updatePosition((coords, error) => {
-      if(coords){
-        this.setState(coords);
-        new MVGNearby(this.state.latitude, this.state.longitude).nearbyStations((list, error)=>{
-          this.setState((state) => {
-            state.list = list || error;
-            return state;
-          })
-        })
-      }
-      else if(error){
-        this.setState({error: error.message});
-      }
-    });
   }
 
   render() {
     const station_list = [];
-    const {navigate} = this.props.navigation;
-    this.state.list.forEach((station) => {
-      station_list.push(
-        <Text style={styles.item} onPress={
-          () => navigate('Train', {station})
-        }>{station.name}</Text>
-      )
-    });
     return (
       <View style={styles.container}>
+        <Text style={styles.item}>Vielen Dank!</Text>
         <SearchBar
           lightTheme
           onClearText={()=>{
@@ -87,7 +64,7 @@ export default class StatusScreen extends React.Component {
           onChangeText={()=>{
             // Update list of train stations
           }}
-        >Anderer Startbahnhof?</SearchBar>
+        >Wohin soll es gehen?</SearchBar>
         <ScrollView>
           {station_list}
         </ScrollView>
