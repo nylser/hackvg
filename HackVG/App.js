@@ -1,21 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import ConnectionScreen from './connection_screen.js';
+import StatusScreen from './status_screen.js';
+import CommentScreen from './comment_screen.js';
+import {createBottomTabNavigator} from 'react-navigation';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const App = createBottomTabNavigator({
+  Connections: {screen: ConnectionScreen},
+  Status: {screen: StatusScreen},
+  Comments: {screen: CommentScreen},
 });
+
+export default App;
