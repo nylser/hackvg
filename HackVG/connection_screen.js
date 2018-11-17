@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
 import GPSModule from "./API/GPSModule";
 import MVGNearby from "./API/MVGNearby";
-import StationList from './StationList';
 
 export default class ConnectionScreen extends React.Component {
   constructor(props){
@@ -18,35 +17,12 @@ export default class ConnectionScreen extends React.Component {
   }
   
   componentDidMount(){
-    GPSModule.updatePosition((coords, error) => {
-      if(coords){
-        this.setState(coords);
-        new MVGNearby(this.state.latitude, this.state.longitude).nearbyStations((list, error)=>{
-          this.setState((state) => {
-            state.list = list || error;
-            return state;
-          })
-        })
-      }
-      else if(error){
-        this.setState({error: error.message});
-      }
-    });
   }
 
   render() {
-    const station_list = [];
-    for(station of this.state.list){
-      station_list.push(
-        <Text style={styles.item}>{station.name}</Text>//, {station.place}</Text>
-      )
-    }
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Bist du in der U-Bahn?</Text>
-        <ScrollView>
-          {station_list}
-        </ScrollView>
+        <Text>Hier eine Verbindung suchen und finden!</Text>
       </View>
     );
   }
@@ -57,7 +33,7 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       backgroundColor: '#fff',
-      alignItems: 'stretch',
+      alignItems: 'center',
       justifyContent: 'center',
       paddingTop: 22,
     },
