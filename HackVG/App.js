@@ -8,6 +8,6 @@ const App = createBottomTabNavigator({
   Connections: {screen: ConnectionScreen},
   Status: {screen: StatusScreen},
   Comments: {screen: CommentScreen},
-});
+}, {initialRouteName: 'Status'});
 
 export default App;

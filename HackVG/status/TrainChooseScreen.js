@@ -1,23 +1,34 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView} from 'react-native';
-import StationChooseScreen from './status/StationChooseScreen';
 
-export default class StatusScreen extends React.Component {
+export default class TrainChooseScreen extends React.Component {
 
   constructor(props){
     super(props);
     this.state = {
-      screen: props.screen || StationChooseScreen,
-      data: props.data,
-      props: props.props
+      station: props.station
     }
 
   }
   
+  componentDidMount(){
+  }
+
   render() {
-    const newData = Object.assign({}, this.props, this.state.props);
-    newData.data = this.state.data;
-    return React.createElement(this.state.screen, newData);
+    const station_list = [];
+    for(station of this.state.list){
+      station_list.push(
+        <Text style={styles.item}>{station.name}</Text>//, {station.place}</Text>
+      )
+    }
+    return (
+      <View style={styles.container}>
+        <Text style={styles.heading}>Bist du in der U-Bahn?</Text>
+        <ScrollView>
+          {station_list}
+        </ScrollView>
+      </View>
+    );
   }
 }
 
