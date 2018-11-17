@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, Button, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, Button, View, ScrollView, AsyncStorage } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import GPSModule from "../API/GPSModule";
 import MVGNearby from "../API/MVGNearby";
@@ -11,6 +11,7 @@ import MVGNearby from "../API/MVGNearby";
 export default class ConnectionSelectScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.start = -1;
     this.state = {
       latitude: 0,
       longitude: 0,
@@ -39,11 +40,6 @@ export default class ConnectionSelectScreen extends React.Component {
 
   handleStartClick(e) {
     this.props.navigation.navigate('StartSelectScreen',);
-    /**val = e.value;
-    if (val == "Start eingeben") {
-      val = null;
-    }
-    this.props.navigation.navigate('StartSelectScreen', {pre_val: val});**/;
   }
 
   handleEndClick(e) {
@@ -55,14 +51,25 @@ export default class ConnectionSelectScreen extends React.Component {
   }
 
   render() {
-    if (this.state.nearby_list.length > 0) {
+    const start_value = null;
+    AsyncStorage.getItem('start').then((item) => {
+      console.log(item);
+      if(item != null){
+        start_value = item;
+      }
+    });
+    console.log(start_value);
+    end_value = this.props.navigation.getParam('end', '');
+    
+    
+    if (this.state.nearby_list.length > 0 && start_value == '') {
       start_input = <SearchBar onFocus={(e) => { this.props.navigation.navigate('StartSelectScreen', {pre_val: start_input.value});
         
       }} value={this.state.nearby_list[0].name} />
     } else {
-      start_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('StartSelectScreen', {pre_val: start_input.value})} placeholder="Start eingeben" />
+      start_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('StartSelectScreen', {pre_val: start_input.value})} value={start_value} placeholder="Start eingeben" />
     }
-    end_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('EndSelectScreen', {pre_val: end_input.value})} placeholder="Ziel eingeben" />
+    end_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('EndSelectScreen', {pre_val: end_input.value})} value={end_value} placeholder="Ziel eingeben" />
 
     return (
       <View style={styles.container}>

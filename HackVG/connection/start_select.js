@@ -1,6 +1,5 @@
-import React from 'react';
-import {StyleSheet, Text,
-   View, ScrollView, Button} from 'react-native';
+import {React} from 'react';
+import {StyleSheet, Text, View, ScrollView, Button, AsyncStorage} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import MVGQueryLocation from '../API/MVGQueryLocation';
 
@@ -19,6 +18,7 @@ export default class StartSelectScreen extends React.Component {
 
   componentDidMount() {
     this.search.focus();
+    
     setInterval(() => {
       if((new Date).getTime() - this.last_update > 25 && this.query != this.last_query){
         this.doQuery();
@@ -35,12 +35,14 @@ export default class StartSelectScreen extends React.Component {
   }
 
   render() {
-    const {navigation} = this.props;  
+    const {navigation} = this.props;
     const pre_val = navigation.getParam('pre_val', 'Test');
-    const locations = []
+    const locations = [];
     this.state.result_list.forEach((location) => {
-      if(location.type=='station'){
-      locations.push(<Button style={styles.item} onPress={(i) => console.log(location.id)} title={location.name}/>);    
+      if(location.type == 'station') {
+        locations.push(<Text style={styles.item} onPress={(i) => 
+          AsyncStorage.setItem('start', location.id, () => navigation.goBack())
+        }>{location.name}</Text>)
       }
     });
     
