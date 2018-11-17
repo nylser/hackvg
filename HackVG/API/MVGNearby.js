@@ -11,6 +11,7 @@ export default class {
    * and return it to callback
    */
   nearbyStations(callback){
+    // Special authentication key of mvg for json fetching
     auth_head = new Headers();
     auth_head.append("X-MVG-Authorization-Key", "5af1beca494712ed38d313714d4caff6");
 
@@ -22,7 +23,7 @@ export default class {
     }).then(
       (response) => response.json()
     ).then(
-      (list) => callback(list)
+      (list) => callback(list.locations)
     ).catch((error)=>{
       callback(undefined, error);
     });

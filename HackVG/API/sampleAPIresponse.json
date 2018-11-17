@@ -1,0 +1,83 @@
+{
+    "locations": [{
+        "type": "nearbystation",
+        "latitude": 48.261153,
+        "longitude": 11.668467,
+        "id": 2073,
+        "place": "Garching (b München)",
+        "name": "Boltzmannstraße",
+        "hasLiveData": false,
+        "hasZoomData": false,
+        "products": ["BUS"],
+        "distance": 153,
+        "lines": {
+            "tram": [],
+            "nachttram": [],
+            "sbahn": [],
+            "ubahn": [],
+            "bus": ["230", "292", "690"],
+            "nachtbus": [],
+            "otherlines": []
+        }
+    }, {
+        "type": "nearbystation",
+        "latitude": 48.264857,
+        "longitude": 11.671218,
+        "id": 460,
+        "place": "Garching (b München)",
+        "name": "Garching, Forschungszentrum",
+        "hasLiveData": true,
+        "hasZoomData": true,
+        "products": ["BUS", "UBAHN"],
+        "distance": 329,
+        "lines": {
+            "tram": [],
+            "nachttram": [],
+            "sbahn": [],
+            "ubahn": ["U6"],
+            "bus": ["230", "292", "690"],
+            "nachtbus": [],
+            "otherlines": []
+        }
+    }, {
+        "type": "nearbystation",
+        "latitude": 48.261925,
+        "longitude": 11.66193,
+        "id": 2071,
+        "place": "Garching (b München)",
+        "name": "Ludwig-Prandtl-Straße",
+        "hasLiveData": false,
+        "hasZoomData": false,
+        "products": ["BUS"],
+        "distance": 465,
+        "lines": {
+            "tram": [],
+            "nachttram": [],
+            "sbahn": [],
+            "ubahn": [],
+            "bus": ["230", "292", "690"],
+            "nachtbus": [],
+            "otherlines": []
+        }
+    }, {
+        "type": "nearbystation",
+        "latitude": 48.267539,
+        "longitude": 11.665489,
+        "id": 2070,
+        "place": "Garching (b München)",
+        "name": "Technische Universität",
+        "hasLiveData": false,
+        "hasZoomData": false,
+        "products": ["BUS"],
+        "distance": 594,
+        "lines": {
+            "tram": [],
+            "nachttram": [],
+            "sbahn": [],
+            "ubahn": [],
+            "bus": ["230", "292", "690"],
+            "nachtbus": [],
+            "otherlines": []
+        }
+    }]
+}
