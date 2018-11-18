@@ -3,6 +3,7 @@ import { StyleSheet, Text, Button, View, ScrollView, AsyncStorage } from 'react-
 import { SearchBar } from 'react-native-elements';
 import GPSModule from "../API/GPSModule";
 import MVGNearby from "../API/MVGNearby";
+import MVGQueryLocation from '../API/MVGQueryLocation';
 
 
 
@@ -14,6 +15,7 @@ export default class ConnectionSelectScreen extends React.Component {
     this.state = {
       start: null,
       end: null,
+      connList: []
     }
   }
 
@@ -23,8 +25,7 @@ export default class ConnectionSelectScreen extends React.Component {
         this.setState(coords);
         new MVGNearby(this.state.latitude, this.state.longitude).nearbyStations((list, error) => {
           this.setState((state) => {
-            state.nearby_list = list || error;
-            state.start = state.nearby_list[0];
+            state.start = list[0];
             return state;
           })
         })
@@ -33,6 +34,12 @@ export default class ConnectionSelectScreen extends React.Component {
         this.setState({ error: error.message });
       }
     });
+    new MVGQueryLocation('Hauptbahnhof').query_location((list) => {
+      this.setState((state) => {
+        state.end = list[0];
+        return state;
+      })
+    })
   }
 
   handleStartClick(e) {
@@ -51,17 +58,28 @@ export default class ConnectionSelectScreen extends React.Component {
       };
     })});
     }} value={this.state.start ? this.state.start.place : ''} placeholder="Start eingeben" />
-    const end_input = <SearchBar lightTheme onFocus={(e) => this.props.navigation.navigate('EndSelectScreen', {pre_val: this.state.end, callback: (place) => this.setState((state) => {
-      return {
-        start: state.start,
-        end: place,
-      }
-    })})} value={this.state.end ? this.state.end.place : ''} placeholder="Ziel eingeben" />
+    const end_input = <SearchBar lightTheme onFocus={(e) => this.props.navigation.navigate('EndSelectScreen', {pre_val: this.state.end, callback: (place) => {
+      this.setState((state) => {
+        return {
+          start: state.start,
+          end: place,
+        }
+      });
+    }})} value={this.state.end ? this.state.end.place : ''} placeholder="Ziel eingeben" />
 
     return (
       <View style={styles.container}>
         {start_input}
         {end_input}
+        <ScrollView>
+          <Text style={{...styles.item, backgroundColor: 'white'}}>U6 | U5         13:16</Text>
+          <Text style={{...styles.item, backgroundColor: 'orange'}}>U6 | U5         13:36</Text>
+          <Text style={{...styles.item, backgroundColor: 'red'}}>U6 | U5         13:56</Text>
+          <Text style={{...styles.item, backgroundColor: 'yellow'}}>U6 | U5         14:16</Text>
+          <Text style={{...styles.item, backgroundColor: 'white'}}>U6 | U5         14:36</Text>
+          <Text style={{...styles.item, backgroundColor: 'white'}}>U6 | U5         14:56</Text>
+          <Text style={{...styles.item, backgroundColor: 'orange'}}>U6 | U5         15:16</Text>
+        </ScrollView>
       </View>
     );
   }

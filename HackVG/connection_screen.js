@@ -16,7 +16,7 @@ const ConnectionScreen = createStackNavigator({
   StartSelectScreen: {
     screen: StartSelectScreen,
     navigationOptions: ({navigation}) => ({
-      title: `Start auswaehlen`,
+      title: `Start auswählen`,
       headerStyle: styles.heading,
       headerTintColor: 'white',
     })
@@ -24,7 +24,7 @@ const ConnectionScreen = createStackNavigator({
   EndSelectScreen: {
     screen: StartSelectScreen,
     navigationOptions: ({navigation}) => ({
-      title: `Ziel auswaehlen`,
+      title: `Ziel auswählen`,
       headerStyle: styles.heading,
       headerTintColor: 'white',
     })

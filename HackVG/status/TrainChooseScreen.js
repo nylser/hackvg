@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
       backgroundColor: 'steelblue',
     },
     item: {
-      padding: 10,
+      padding: 15,
       fontSize: 18,
-      height: 44,
+      height: 70,
       backgroundColor: 'skyblue',
       color: 'black',
-      fontWeight: 'bold'
+      //fontWeight: 'bold'
     },
 });
   

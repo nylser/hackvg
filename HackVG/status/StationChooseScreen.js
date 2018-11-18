@@ -22,11 +22,11 @@ const styles = StyleSheet.create({
       color: 'white'
     },
     item: {
-      padding: 10,
+      padding: 15,
       fontSize: 18,
-      height: 44,
+      height: 70,
       backgroundColor: 'skyblue',
-      fontWeight: 'bold',
+      //fontWeight: 'bold',
     },
 });
   

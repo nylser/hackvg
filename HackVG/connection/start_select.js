@@ -35,7 +35,7 @@ export default class StartSelectScreen extends React.Component {
     const locations = [];
     this.state.result_list.forEach((location) => {
       if(location.type == 'station') {
-        locations.push(<Text style={styles.item} onPress={(i) => {
+        locations.push(<Text style={styles.item} onPress={() => {
           this.callback(location);
           this.props.navigation.goBack();
         }
@@ -45,7 +45,7 @@ export default class StartSelectScreen extends React.Component {
     
     return (
       <View style={styles.container}>
-        <SearchBar lightTheme onChangeText={(text) => {
+        <SearchBar lightTheme onSubmitEditing={(text) => {
           new MVGQueryLocation(text).query_location((list) => {
             this.setState((state) => {
               return {
