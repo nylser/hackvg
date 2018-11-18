@@ -8,57 +8,55 @@ export default class StartSelectScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.query = '';
-    this.last_query = '';
-    this.last_update = 0;
+    this.callback = this.props.navigation.getParam('callback', ()=>{});
+    this.query = this.props.navigation.getParam('pre_val', 'Garching, Forschungszentrum');
     this.state = {
       result_list: [],
+
+      last_query: null, 
+      last_update: Date.now(),
     };
   }
 
   componentDidMount() {
-    this.search.focus();
-    
-    setInterval(() => {
-      if(Date.now() - this.last_update > 25 && this.query != this.last_query){
-        this.doQuery();
-      }
-    }, 1000);
-  }
-
-  doQuery() {
     new MVGQueryLocation(this.query).query_location((list) => {
-      this.setState({result_list: list});
-      this.last_update = (new Date).getTime();
-      this.last_query = this.query;
+      this.setState((state) => {
+        return {
+          result_list: list,
+          last_query: state.query,
+          last_update: Date.now(),
+        }
+      });
     });
   }
 
   render() {
-    const {navigation} = this.props;
-    const pre_val = navigation.getParam('pre_val', 'Test');
+    const {navigate} = this.props.navigation;
     const locations = [];
     this.state.result_list.forEach((location) => {
       if(location.type == 'station') {
-        locations.push(<Text style={styles.item} onPress={(i) => 
-          AsyncStorage.setItem('start', location.id, () => navigation.goBack())
+        locations.push(<Text style={styles.item} onPress={(i) => {
+          this.callback(location);
+          this.props.navigation.goBack();
+        }
         }>{location.name}</Text>)
       }
     });
     
     return (
       <View style={styles.container}>
-        <SearchBar onChangeText={(text) => {
-          this.query = text;
-          if((new Date).getTime() - this.last_update > 100){
-            new MVGQueryLocation(this.query).query_location((list) => {
-              this.setState({result_list: list});
-              this.last_update = (new Date).getTime();
-              this.last_query = this.query;
+        <SearchBar lightTheme onChangeText={(text) => {
+          new MVGQueryLocation(text).query_location((list) => {
+            this.setState((state) => {
+              return {
+                last_query: text,
+                last_update: Date.now(),
+                result_list: list,
+              }
             });
-          }
+          });
         }}
-        value={JSON.stringify(pre_val)} ref={search => this.search=search} placeholder="Start eingeben"/>
+        value={this.query ? this.query.place : ''} placeholder="Bitte eingeben"/>
         <ScrollView>
           {locations}
         </ScrollView>

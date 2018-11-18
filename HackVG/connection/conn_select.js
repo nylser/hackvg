@@ -11,13 +11,9 @@ import MVGNearby from "../API/MVGNearby";
 export default class ConnectionSelectScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.start = -1;
     this.state = {
-      latitude: 0,
-      longitude: 0,
-      accuracy: 0,
-      error: "",
-      nearby_list: []
+      start: null,
+      end: null,
     }
   }
 
@@ -28,6 +24,7 @@ export default class ConnectionSelectScreen extends React.Component {
         new MVGNearby(this.state.latitude, this.state.longitude).nearbyStations((list, error) => {
           this.setState((state) => {
             state.nearby_list = list || error;
+            state.start = state.nearby_list[0];
             return state;
           })
         })
@@ -39,44 +36,32 @@ export default class ConnectionSelectScreen extends React.Component {
   }
 
   handleStartClick(e) {
-    this.props.navigation.navigate('StartSelectScreen',);
+    this.props.navigation.navigate('StartSelectScreen', {pre_val: this.state.start});
   }
 
   handleEndClick(e) {
-    val = e.value;
-    if (val == "Ziel eingeben") {
-      val = null;
-    }
-    this.props.navigation.navigate('EndSelectScreen', {pre_val: val});
+    this.props.navigation.navigate('EndSelectScreen', {pre_val: this.state.end});
   }
 
   render() {
-    const start_value = null;
-    AsyncStorage.getItem('start').then((item) => {
-      console.log(item);
-      if(item != null){
-        start_value = item;
+    const start_input = <SearchBar lightTheme onFocus={(e) => { this.props.navigation.navigate('StartSelectScreen', {pre_val: this.state.start, callback: (place) => this.setState((state) => {
+      return {
+        start: place,
+        end: state.end
+      };
+    })});
+    }} value={this.state.start ? this.state.start.place : ''} placeholder="Start eingeben" />
+    const end_input = <SearchBar lightTheme onFocus={(e) => this.props.navigation.navigate('EndSelectScreen', {pre_val: this.state.end, callback: (place) => this.setState((state) => {
+      return {
+        start: state.start,
+        end: place,
       }
-    });
-    console.log(start_value);
-    end_value = this.props.navigation.getParam('end', '');
-    
-    
-    if (this.state.nearby_list.length > 0 && start_value == '') {
-      start_input = <SearchBar onFocus={(e) => { this.props.navigation.navigate('StartSelectScreen', {pre_val: start_input.value});
-        
-      }} value={this.state.nearby_list[0].name} />
-    } else {
-      start_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('StartSelectScreen', {pre_val: start_input.value})} value={start_value} placeholder="Start eingeben" />
-    }
-    end_input = <SearchBar onFocus={(e) => this.props.navigation.navigate('EndSelectScreen', {pre_val: end_input.value})} value={end_value} placeholder="Ziel eingeben" />
+    })})} value={this.state.end ? this.state.end.place : ''} placeholder="Ziel eingeben" />
 
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Hier eine Verbindung suchen und finden!</Text>
         {start_input}
         {end_input}
-        <Button style={styles.item} title='Verbindung suchen!' />
       </View>
     );
   }

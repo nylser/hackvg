@@ -3,23 +3,32 @@ import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 import ConnectionSelectScreen from './connection/conn_select.js';
 import StartSelectScreen from './connection/start_select.js';
-import EndSelectScreen from './connection/end_select.js';
 
 const ConnectionScreen = createStackNavigator({
   SelectScreen: {
     screen: ConnectionSelectScreen, 
     navigationOptions: ({navigation}) => ({
-      header: null,
+      title: `Verbindung suchen und finden`,
+      headerStyle: styles.heading,
+      headerTintColor: 'white',
     })
   },
   StartSelectScreen: {
     screen: StartSelectScreen,
-    title: `Start auswaehlen`,
     navigationOptions: ({navigation}) => ({
-      
+      title: `Start auswaehlen`,
+      headerStyle: styles.heading,
+      headerTintColor: 'white',
     })
   },
-  EndSelectScreen: {screen: EndSelectScreen},
+  EndSelectScreen: {
+    screen: StartSelectScreen,
+    navigationOptions: ({navigation}) => ({
+      title: `Ziel auswaehlen`,
+      headerStyle: styles.heading,
+      headerTintColor: 'white',
+    })
+  },
 });
 
 export default ConnectionScreen;
