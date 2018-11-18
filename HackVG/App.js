@@ -1,28 +1,35 @@
 import React from 'react';
-import firebase from 'firebase';
 import ConnectionScreen from './connection_screen.js';
 import StatusScreen from './status_screen.js';
 import CommentScreen from './comment_screen.js';
 import {createBottomTabNavigator} from 'react-navigation';
-
-// Initialize Firebase
-const config = {
-  apiKey: "AIzaSyDsFS7_QW0ccKZBWxBIj25yNBhgYPgrQdE",
-  authDomain: "hackvg1-16762.firebaseapp.com",
-  databaseURL: "https://hackvg1-16762.firebaseio.com",
-  projectId: "hackvg1-16762",
-  storageBucket: "hackvg1-16762.appspot.com",
-  messagingSenderId: "235022246674"
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(config);
-}
+import Ionicons from '@expo/vector-icons';
 
 const App = createBottomTabNavigator({
-  Connections: {screen: ConnectionScreen},
-  Status: {screen: StatusScreen},
-  Comments: {screen: CommentScreen},
+  Connections: {
+    screen: ConnectionScreen,
+    /* navigationOptions: {
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        return <Ionicons name="retweets" />;
+      }
+    } */ 
+  },
+  Status: {
+    screen: StatusScreen,
+    /* navigationOptions: {
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        return <Ionicons name="user"/>
+      }
+    } */ 
+  },
+  Comments: {
+    screen: CommentScreen,
+    /* navigationOptions: {
+      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        return <Ionicons name="comment"/>
+      }
+  } */
+  },
 }, {initialRouteName: 'Status'});
 
 export default App;
