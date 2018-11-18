@@ -1,3 +1,3 @@
-# hackVG
+![hackVG](./Logo.png)
 
 Don't like full subways?
